@@ -69,17 +69,10 @@
                             return this.modelValue
                         },
                         set(value){
-                            //console.log(value)
                             this.$emit('update:modelValue', value)
                         }
                     }
                 },
-
-                // data(){
-                //     return {
-                //         InputValue: ''
-                //     }
-                // }
             })
 
             app.mount('#app')
