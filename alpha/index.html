@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title> V3 learning</title>
+        <script src="js/vue3.js"></script>
+        <link rel="stylesheet" href="css/style.css"/>
+    </head>
+    <body>
+        <div id="app" v-cloak >
+            <login-form />
+        </div>
+
+        <script>
+            let app = Vue.createApp({
+                data: function(){
+                    return {
+                        greeting: "hello world",
+                        isVisible: true,
+                        recounter: 7
+                    }
+                },
+                methods: {
+                    toggleBox(){
+                        this.isVisible = !this.isVisible;
+                    }
+
+                }
+            })
+
+
+            app.component( 'login-form', {
+                template:`
+                    <form @submit.prevent="handleSubmit">
+                        <h2>{{ title }} </h2>
+                            <custom-input v-model="email" :label="emailLabel" />
+                            <custom-input v-model="password" :label="passwordLabel" />
+                        <button>login</button>
+                    </form>
+                `,
+                components: ['custom-input'],
+                data() {
+                    return {
+                        title: 'login form',
+                        email: '',
+                        password: '',
+                        emailLabel: 'email',
+                        passwordLabel: 'password' 
+                    }
+                },
+                
+                methods: {
+                    handleSubmit(){
+                        console.log(this.email, this.password)
+                    }
+                }
+            })
+
+            app.component( 'custom-input',{
+                template:`
+                    <label>
+                        {{ label }}
+                        <input type="text" v-model="inputValue" />
+                    </label>
+                `,
+                props: ['label', 'modelValue'],
+                
+                computed: {
+                    inputValue: {
+                        get(){
+                            return this.modelValue
+                        },
+                        set(value){
+                            //console.log(value)
+                            this.$emit('update:modelValue', value)
+                        }
+                    }
+                },
+
+                // data(){
+                //     return {
+                //         InputValue: ''
+                //     }
+                // }
+            })
+
+            app.mount('#app')
+        </script>
+    </body>
+</html>
